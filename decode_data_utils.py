@@ -23,7 +23,6 @@ def unpack_bcd(bcd_data):
         # 0x0F is 00001111 in binary
         # using a bitwise AND will return the low nibble
         low_nibble = byte & 0x0F
-        print(high_nibble, low_nibble)
         # concatenate the high and low nibbles to the unpacked string
         unpacked += str(high_nibble) + str(low_nibble)
     return unpacked
