@@ -20,6 +20,7 @@ def unpack_bcd(bcd_data):
         # 0x0F is 00001111 in binary
         # using a bitwise AND will return the low nibble
         low_nibble = byte & 0x0F
+        print(high_nibble, low_nibble)
         # concatenate the high and low nibbles to the unpacked string
         unpacked += str(high_nibble) + str(low_nibble)
     return unpacked
@@ -38,3 +39,19 @@ def remove_starting_zeros(decimal_string):
     """
     # remove starting zeros, if there are no digits left after unpacking, return "0"
     return decimal_string.lstrip("0") or "0"
+
+
+def decode_ascii_from_hex(hex_data):
+    """
+    Decodes ASCII data from hex format.
+
+    Args:
+        hex_data (bytes): Hex data.
+
+    Returns:
+        list: ASCII data.
+    """
+    # convert each byte to ASCII with chr()
+    decoded = [chr(byte) for byte in hex_data]
+
+    return "".join(decoded)

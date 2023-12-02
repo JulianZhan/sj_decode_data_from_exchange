@@ -1,4 +1,4 @@
-from decode_data_utils import unpack_bcd, remove_starting_zeros
+from decode_data_utils import *
 import pytest
 
 
@@ -22,3 +22,9 @@ def test_unpack_bcd_with_cumulative_volume():
 def test_remove_starting_zeros():
     assert remove_starting_zeros("00000000") == "0"
     assert remove_starting_zeros("") == "0"
+
+
+def test_decode_ascii_from_hex():
+    # TSMC code
+    hex_data = bytes([0x32, 0x33, 0x33, 0x30, 0x20, 0x20])
+    assert decode_ascii_from_hex(hex_data) == "2330  "
