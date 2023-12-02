@@ -21,10 +21,17 @@ def test_unpack_bcd_with_cumulative_volume():
 
 def test_remove_starting_zeros():
     assert remove_starting_zeros("00000000") == "0"
-    assert remove_starting_zeros("") == "0"
+    assert remove_starting_zeros("00000001") == "1"
+    assert remove_starting_zeros("00001000") == "1000"
 
 
-def test_decode_ascii_from_hex():
+def test_decode_from_hex_with_ascii():
     # TSMC code
     hex_data = bytes([0x32, 0x33, 0x33, 0x30, 0x20, 0x20])
-    assert decode_ascii_from_hex(hex_data) == "2330  "
+    assert decode_from_hex_with_ascii(hex_data) == "2330  "
+
+
+def test_decode_from_hex_to_binary_string():
+    assert decode_from_hex_to_binary_string(0xD6) == "11010110"
+    assert decode_from_hex_to_binary_string(0x00) == "00000000"
+    assert decode_from_hex_to_binary_string(0xFF) == "11111111"

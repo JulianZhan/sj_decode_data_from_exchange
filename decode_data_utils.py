@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def unpack_bcd(bcd_data):
     """
     Unpacks pack BCD data in hex format to decimal as a string.
@@ -41,17 +44,34 @@ def remove_starting_zeros(decimal_string):
     return decimal_string.lstrip("0") or "0"
 
 
-def decode_ascii_from_hex(hex_data):
+def decode_from_hex_with_ascii(hex_data):
     """
-    Decodes ASCII data from hex format.
+    Decodes data from hex format with ASCII encoding.
 
     Args:
         hex_data (bytes): Hex data.
 
     Returns:
-        list: ASCII data.
+        str: Decoded string.
     """
     # convert each byte to ASCII with chr()
     decoded = [chr(byte) for byte in hex_data]
-
+    # join the list of strings into one string
     return "".join(decoded)
+
+
+def decode_from_hex_to_binary_string(hex_data):
+    """
+    decodes data from hex format to binary string.
+
+    Args:
+        hex_data (int): Hex data.
+
+    Returns:
+        str: Binary string with eight bits.
+    """
+    # convert hex to binary string
+    decoded = np.base_repr(hex_data, base=2)
+    # pad with zeros to make sure the string is 8 bits long
+    # if input is 0x00, return should be 00000000
+    return decoded.zfill(8)
