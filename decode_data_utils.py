@@ -6,7 +6,7 @@ def unpack_bcd(bcd_data):
     Unpacks pack BCD data in hex format to decimal as a string.
 
     Args:
-        bcd_data (bytes): BCD data in hex format.
+        bcd_data (bytes): BCD data in hex format, multiple bytes.
 
     Returns:
         str: Decimal string.
@@ -48,7 +48,7 @@ def decode_from_hex_with_ascii(hex_data):
     Decodes data from hex format with ASCII encoding.
 
     Args:
-        hex_data (bytes): Hex data.
+        hex_data (bytes): Hex data, multiple bytes.
 
     Returns:
         str: Decoded string.
@@ -64,7 +64,7 @@ def decode_from_hex_to_binary_string(hex_data):
     decodes data from hex format to binary string.
 
     Args:
-        hex_data (int): Hex data.
+        hex_data (int): Hex data, one byte.
 
     Returns:
         str: Binary string with eight bits.
@@ -74,3 +74,29 @@ def decode_from_hex_to_binary_string(hex_data):
     # pad with zeros to make sure the string is 8 bits long
     # if input is 0x00, return should be 00000000
     return decoded.zfill(8)
+
+def is_beginning_of_message(hex_data):
+    """
+    Checks if the data is the beginning of a message.
+
+    Args:
+        hex_data (bytes): Hex data, one byte.
+
+    Returns:
+        bool: True if the data is the beginning of a message, False otherwise.
+    """
+    # check if the first byte is 0x1B
+    return hex_data[0] == 0x1B
+
+def is_end_of_message(hex_data):
+    """
+    Checks if the data is the end of a message.
+
+    Args:
+        hex_data (bytes): Hex data, two bytes.
+
+    Returns:
+        bool: True if the data is the end of a message, False otherwise.
+    """
+    # check if these two bytes are 0x0D and 0x0A
+    return hex_data[0] == 0x0D and hex_data[1] == 0x0A
