@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def unpack_bcd(bcd_data, data_type=""):
+def unpack_bcd(bcd_data, data_type=None):
     """
     Unpacks pack BCD data in hex format to decimal as a string.
 
@@ -25,10 +25,10 @@ def unpack_bcd(bcd_data, data_type=""):
         low_nibble = byte & 0x0F
         # concatenate the high and low nibbles to the unpacked string
         unpacked += str(high_nibble) + str(low_nibble)
-        
-    if data_type.endswith("V99"):
+
+    if isinstance(data_type, str) and data_type.endswith("V99"):
         # Insert the decimal point before the last two digits
-        unpacked = unpacked[:-2] + '.' + unpacked[-2:]
+        unpacked = unpacked[:-2] + "." + unpacked[-2:]
     return unpacked
 
 
@@ -79,6 +79,7 @@ def decode_from_hex_to_binary_string(hex_data):
     # if input is 0x00, return should be 00000000
     return decoded.zfill(8)
 
+
 def is_beginning_of_message(hex_data):
     """
     Checks if the data is the beginning of a message.
@@ -91,6 +92,7 @@ def is_beginning_of_message(hex_data):
     """
     # check if the first byte is 0x1B
     return hex_data[0] == 0x1B
+
 
 def is_end_of_message(hex_data):
     """
