@@ -115,3 +115,28 @@ def test_1504_stock_data():
 
     for key in expected_data:
         assert decoded_data.fields[key].value == expected_data[key]
+
+
+def test_1301_stock_data():
+    expected_data = {
+        "esc_code": b"\x1b",
+        "message_length": 39,
+        "business_type": 1,
+        "transmission_format_code": 6,
+        "transmission_format_version": 3,
+        "transmission_number": 8325,
+        "stock_code": "1301  ",
+        "match_time": 94519033017, 
+        "revelation_note": "10000000",
+        "price_limit_mark": "10000001",
+        "status_note": "00000000",
+        "cumulative_volume": 1558,
+        "trade_price": 33.50,
+        "trade_volume": 0,
+        "check_sum": b"\xc6",
+        "terminal_code": b"\x0d\x0a",
+    }
+    decoded_data = process_stock_data(data_1301, sotck_transaction_structure_1301)
+
+    for key in expected_data:
+        assert decoded_data.fields[key].value == expected_data[key]

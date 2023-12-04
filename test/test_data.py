@@ -92,3 +92,23 @@ data_1504 = bytes([
     0xa2,                   # 檢查碼 (Check Sum)
     0x0d, 0x0a              # TERMINAL-CODE (Hexacode: 0D 0A)
 ])
+
+
+data_1301 = bytes([
+    0x1b,                   # ESC-CODE (ASCII 27)
+    0x00, 0x39,             # 訊息長度 (Message Length: 39 BYTE)
+    0x01,                   # 業務別 (Business Type: 01)
+    0x06,                   # 傳輸格式代碼 (Transmission Format Code: 06)
+    0x03,                   # 傳輸格式版別 (Transmission Format Version: 03)
+    0x00, 0x00, 0x83, 0x25, # 傳輸序號 (Transmission Number: 8325)
+    0x31, 0x33, 0x30, 0x31, 0x20, 0x20, # 股票代號 (Stock Code: "1301 ")
+    0x09, 0x45, 0x19, 0x03, 0x30, 0x17, # 撮合時間 (Match Time)
+    0x80,                   # 揭示項目註記 (Revelation Note)
+    0x81,                   # 漲跌停註記 (Price Limit Mark)
+    0x00,                   # 狀態註記 (Status Note)
+    0x00, 0x00, 0x15, 0x58, # 累計成交量 (Cumulative Volume: 1558)
+    0x00, 0x33, 0x50,       # 成交價 (Trade Price: 33.50)
+    0x00, 0x00, 0x00, 0x00, # 成交量 (Trade Volume: 0)
+    0xC6,                   # 檢查碼 (Check Sum)
+    0x0D, 0x0A              # TERMINAL-CODE (Hexacode: 0D 0A)
+])

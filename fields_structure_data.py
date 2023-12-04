@@ -166,3 +166,32 @@ sotck_transaction_structure_1504 = StockTransactionStructure(
         "terminal_code": Field("terminal_code", (72, 74), "X(02)", "HEXACODE"),
     }
 )
+
+
+
+sotck_transaction_structure_1301 = StockTransactionStructure(
+    {
+        "esc_code": Field("esc_code", (0, 1), "X(01)", "ASCII 27"),
+        "message_length": Field("message_length", (1, 3), "9(04)", "PACK BCD"),
+        "business_type": Field("business_type", (3, 4), "9(02)", "PACK BCD"),
+        "transmission_format_code": Field(
+            "transmission_format_code", (4, 5), "9(02)", "PACK BCD"
+        ),
+        "transmission_format_version": Field(
+            "transmission_format_version", (5, 6), "9(02)", "PACK BCD"
+        ),
+        "transmission_number": Field(
+            "transmission_number", (6, 10), "9(08)", "PACK BCD"
+        ),
+        "stock_code": Field("stock_code", (10, 16), "X(06)", "ASCII"),
+        "match_time": Field("match_time", (16, 22), "9(12)", "PACK BCD"),
+        "revelation_note": Field("revelation_note", (22, 23), "X(01)", "BIT MAP"),
+        "price_limit_mark": Field("price_limit_mark", (23, 24), "X(01)", "BIT MAP"),
+        "status_note": Field("status_note", (24, 25), "X(01)", "BIT MAP"),
+        "cumulative_volume": Field("cumulative_volume", (25, 29), "9(08)", "PACK BCD"),
+        "trade_price": Field("trade_price", (29, 32), "9(4)V99", "PACK BCD"),
+        "trade_volume": Field("trade_volume", (32, 36), "9(08)", "PACK BCD"),
+        "check_sum": Field("check_sum", (36, 37), "X(01)", "XOR"),
+        "terminal_code": Field("terminal_code", (37, 39), "X(02)", "HEXACODE"),
+    }
+)
