@@ -3,13 +3,15 @@ import numpy as np
 
 def unpack_bcd(bcd_data, data_type=None):
     """
-    Unpacks pack BCD data in hex format to decimal as a string.
+    Unpacks pack BCD data in hex format to decimal.
 
     Args:
         bcd_data (bytes): BCD data in hex format, multiple bytes.
 
     Returns:
-        str: Decimal string.
+        if data_type ends with "V99", return float.
+        if data_type starts with "9" but not ends with "V99", return int.
+        otherwise, return str.
     """
 
     # initialize unpacked string
@@ -26,9 +28,13 @@ def unpack_bcd(bcd_data, data_type=None):
         # concatenate the high and low nibbles to the unpacked string
         unpacked += str(high_nibble) + str(low_nibble)
 
+    # if data_type ends with "V99", convert the unpacked string to float
     if isinstance(data_type, str) and data_type.endswith("V99"):
-        # Insert the decimal point before the last two digits
         unpacked = unpacked[:-2] + "." + unpacked[-2:]
+        unpacked = float(unpacked)
+    # if data_type starts with "9" but not ends with "V99", convert the unpacked string to int
+    elif isinstance(data_type, str) and data_type.startswith("9"):
+        unpacked = int(unpacked)
     return unpacked
 
 
@@ -74,6 +80,7 @@ def decode_from_hex_to_binary_string(hex_data):
         str: Binary string with eight bits.
     """
     # convert hex to binary string
+    hex_data = int.from_bytes(hex_data, byteorder="big")
     decoded = np.base_repr(hex_data, base=2)
     # pad with zeros to make sure the string is 8 bits long
     # if input is 0x00, return should be 00000000
@@ -90,8 +97,8 @@ def is_beginning_of_message(hex_data):
     Returns:
         bool: True if the data is the beginning of a message, False otherwise.
     """
-    # check if the first byte is 0x1B
-    return hex_data[0] == 0x1B
+    # check if the byte is 0x1B
+    return hex_data == b"\x1b"
 
 
 def is_end_of_message(hex_data):
@@ -105,4 +112,50 @@ def is_end_of_message(hex_data):
         bool: True if the data is the end of a message, False otherwise.
     """
     # check if these two bytes are 0x0D and 0x0A
-    return hex_data[0] == 0x0D and hex_data[1] == 0x0A
+    return hex_data[0] == b"\x0d" and hex_data[1] == b"\x0A"
+
+
+def calculate_xor_checksum(data, skip_the_beginning=1, skip_the_end=-3):
+    """
+    Calculates the XOR checksum of the data, excluding the first and last three bytes.
+
+    Args:
+        data (bytes): Hex data, multiple bytes.
+
+    Returns:
+        int: XOR checksum.
+    """
+    checksum = 0
+    for byte in data[skip_the_beginning:skip_the_end]:
+        # XOR the checksum with the current byte
+        checksum ^= byte
+    return checksum
+
+
+def process_stock_data(stock_data, stock_data_structure):
+    """
+    Processes stock data based on the given stock data structure.
+
+    Args:
+        stock_data (bytes): Hex data, multiple bytes.
+        stock_data_structure (StockTransactionStructure): Stock data structure.
+
+    Returns:
+        StockTransactionStructure: Stock data structure with values.
+    """
+
+    for field in stock_data_structure.fields.values():
+        # get the bytes of the field
+        field_bytes = stock_data[field.position[0] : field.position[1]]
+
+        # decode the bytes based on the storing type
+        if field.storing_type == "ASCII":
+            field.value = decode_from_hex_with_ascii(field_bytes)
+        elif field.storing_type == "PACK BCD":
+            field.value = unpack_bcd(field_bytes, data_type=field.data_type)
+        elif field.storing_type == "BIT MAP":
+            field.value = decode_from_hex_to_binary_string(field_bytes)
+        else:
+            field.value = field_bytes
+
+    return stock_data_structure

@@ -32,9 +32,9 @@ def test_decode_from_hex_with_ascii():
 
 
 def test_decode_from_hex_to_binary_string():
-    assert decode_from_hex_to_binary_string(0xD6) == "11010110"
-    assert decode_from_hex_to_binary_string(0x00) == "00000000"
-    assert decode_from_hex_to_binary_string(0xFF) == "11111111"
+    assert decode_from_hex_to_binary_string(bytes([0xD6])) == "11010110"
+    assert decode_from_hex_to_binary_string(bytes([0x00])) == "00000000"
+    assert decode_from_hex_to_binary_string(bytes([0xFF])) == "11111111"
 
 
 def test_unpakc_bcd_with_data_type():
@@ -44,5 +44,4 @@ def test_unpakc_bcd_with_data_type():
     assert decimal_string == "009950"
     assert remove_starting_zeros(decimal_string) == "9950"
     decimal_string = unpack_bcd(bcd_encoded_data, "9(4)V99")
-    assert decimal_string == "0099.50"
-    assert remove_starting_zeros(decimal_string) == "99.50"
+    assert decimal_string == 99.50
