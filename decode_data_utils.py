@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def unpack_bcd(bcd_data):
+def unpack_bcd(bcd_data, data_type=""):
     """
     Unpacks pack BCD data in hex format to decimal as a string.
 
@@ -25,6 +25,10 @@ def unpack_bcd(bcd_data):
         low_nibble = byte & 0x0F
         # concatenate the high and low nibbles to the unpacked string
         unpacked += str(high_nibble) + str(low_nibble)
+        
+    if data_type.endswith("V99"):
+        # Insert the decimal point before the last two digits
+        unpacked = unpacked[:-2] + '.' + unpacked[-2:]
     return unpacked
 
 
