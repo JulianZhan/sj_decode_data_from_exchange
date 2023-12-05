@@ -132,6 +132,43 @@ def calculate_xor_checksum(data, skip_the_beginning=1, skip_the_end=-3):
     return checksum
 
 
+def should_decode_field(field_name, revelation_note):
+    if not field_name.startswith("buy_") and not field_name.startswith("sell_"):
+        return True
+
+    # trade price and volume (bit 7)
+    if revelation_note[0] == "1" and field_name in set(("trade_price", "trade_volume")):
+        return True
+
+    # if bit 0 is 1, skip prices and volumes for both buy and sell
+    if revelation_note[7] == "1" and (
+        field_name.startswith("buy_") or field_name.startswith("sell_")
+    ):
+        return False
+
+    # buy price and volume (bit 6-4)
+    num_buy_levels = int(revelation_note[1:4], 2)  # binary to integer
+    if field_name.startswith("buy_") and _get_field_level(field_name) <= num_buy_levels:
+        return True
+
+    # sell price and volume (Bit 3-1)
+    num_sell_levels = int(revelation_note[4:7], 2)  # binary to integer
+    if (
+        field_name.startswith("sell_")
+        and _get_field_level(field_name) <= num_sell_levels
+    ):
+        return True
+    
+    return False
+
+
+def _get_field_level(field_name):
+    # extract the last number from the field name
+    try:
+        return int(field_name.split("_")[-1])
+    except ValueError:
+        return 0
+
 def process_stock_data(stock_data, stock_data_structure):
     """
     Processes stock data based on the given stock data structure.

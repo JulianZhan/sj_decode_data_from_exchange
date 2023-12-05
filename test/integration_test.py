@@ -126,7 +126,7 @@ def test_1301_stock_data():
         "transmission_format_version": 3,
         "transmission_number": 8325,
         "stock_code": "1301  ",
-        "match_time": 94519033017, 
+        "match_time": 94519033017,
         "revelation_note": "10000000",
         "price_limit_mark": "10000001",
         "status_note": "00000000",
