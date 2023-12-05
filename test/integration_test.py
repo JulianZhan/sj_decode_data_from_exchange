@@ -40,7 +40,7 @@ def test_tsmc_stock_data():
         "terminal_code": b"\x0d\x0a",
     }
 
-    decoded_data = process_stock_data(tsmc_data, sotck_transaction_structure_tsmc)
+    decoded_data = process_stock_data_dynamic(tsmc_data, sotck_transaction_structure_6)
 
     for key in expected_data:
         assert decoded_data.fields[key].value == expected_data[key]
@@ -75,7 +75,7 @@ def test_2002_stock_data():
         "check_sum": b"\x6e",
         "terminal_code": b"\x0d\x0a",
     }
-    decoded_data = process_stock_data(data_2002, sotck_transaction_structure_2002)
+    decoded_data = process_stock_data_dynamic(data_2002, sotck_transaction_structure_6)
 
     for key in expected_data:
         assert decoded_data.fields[key].value == expected_data[key]
@@ -111,7 +111,7 @@ def test_1504_stock_data():
         "terminal_code": b"\x0d\x0a",
     }
 
-    decoded_data = process_stock_data(data_1504, sotck_transaction_structure_1504)
+    decoded_data = process_stock_data_dynamic(data_1504, sotck_transaction_structure_6)
 
     for key in expected_data:
         assert decoded_data.fields[key].value == expected_data[key]
@@ -136,7 +136,7 @@ def test_1301_stock_data():
         "check_sum": b"\xc6",
         "terminal_code": b"\x0d\x0a",
     }
-    decoded_data = process_stock_data(data_1301, sotck_transaction_structure_1301)
+    decoded_data = process_stock_data_dynamic(data_1301, sotck_transaction_structure_6)
 
     for key in expected_data:
         assert decoded_data.fields[key].value == expected_data[key]

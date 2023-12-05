@@ -158,7 +158,7 @@ def should_decode_field(field_name, revelation_note):
         and _get_field_level(field_name) <= num_sell_levels
     ):
         return True
-    
+
     return False
 
 
@@ -168,6 +168,7 @@ def _get_field_level(field_name):
         return int(field_name.split("_")[-1])
     except ValueError:
         return 0
+
 
 def process_stock_data(stock_data, stock_data_structure):
     """
@@ -194,5 +195,38 @@ def process_stock_data(stock_data, stock_data_structure):
             field.value = decode_from_hex_to_binary_string(field_bytes)
         else:
             field.value = field_bytes
+
+    return stock_data_structure
+
+
+def process_stock_data_dynamic(stock_data, stock_data_structure):
+    revelation_note = decode_from_hex_to_binary_string(stock_data[22:23])
+    number_of_position_to_move = 0
+
+    for field_name, field in stock_data_structure.fields.items():
+        start_position = field.position[0]
+        end_position = field.position[1]
+        if should_decode_field(field_name, revelation_note):
+            start_position -= number_of_position_to_move
+            end_position -= number_of_position_to_move
+            # Decode the field
+            field_bytes = stock_data[start_position:end_position]
+            if field.storing_type == "ASCII":
+                field.value = decode_from_hex_with_ascii(field_bytes)
+            elif field.storing_type == "PACK BCD":
+                field.value = unpack_bcd(field_bytes, data_type=field.data_type)
+            elif field.storing_type == "BIT MAP":
+                field.value = decode_from_hex_to_binary_string(field_bytes)
+            else:
+                field.value = field_bytes
+        else:
+            if field_name == "trade_price":
+                number_of_position_to_move += 3
+            elif field_name == "trade_volume":
+                number_of_position_to_move += 4
+            elif field_name.split("_")[1] == "price":
+                number_of_position_to_move += 3
+            elif field_name.split("_")[1] == "volume":
+                number_of_position_to_move += 4
 
     return stock_data_structure
