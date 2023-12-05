@@ -111,8 +111,8 @@ def is_end_of_message(hex_data):
     Returns:
         bool: True if the data is the end of a message, False otherwise.
     """
-    # check if these two bytes are 0x0D and 0x0A
-    return hex_data[0] == b"\x0d" and hex_data[1] == b"\x0A"
+    # check if the bytes are 0x0D 0x0A
+    return hex_data == b"\r\n"
 
 
 def calculate_xor_checksum(data, skip_the_beginning=1, skip_the_end=-3):
@@ -209,7 +209,7 @@ def process_stock_data_dynamic(stock_data, stock_data_structure):
         if should_decode_field(field_name, revelation_note):
             start_position -= number_of_position_to_move
             end_position -= number_of_position_to_move
-            # Decode the field
+            
             field_bytes = stock_data[start_position:end_position]
             if field.storing_type == "ASCII":
                 field.value = decode_from_hex_with_ascii(field_bytes)
