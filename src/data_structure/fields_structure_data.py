@@ -1,4 +1,4 @@
-from fields_structure_template import Field, StockTransactionStructure
+from src.data_structure.fields_structure_template import Field, StockTransactionStructure
 
 sotck_transaction_structure = StockTransactionStructure(
     {

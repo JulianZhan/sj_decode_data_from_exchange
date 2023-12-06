@@ -1,8 +1,8 @@
-from fields_structure_data import *
+from src.data_structure.fields_structure_data import *
 from test_data import *
 from expected_data import *
-from decode_data_utils import *
-from decode_data import *
+from src.utils.decode_data_utils import *
+from src.main import *
 
 
 def test_tsmc_stock_data():
