@@ -11,7 +11,7 @@ def decode_new_file(file_path):
         file_data = file.read()
 
     start = 0
-    start_marker = b"x1b"
+    start_marker = b"\x1b"
     end_marker = b"\r\n"
     len_end_marker = len(end_marker)
 
