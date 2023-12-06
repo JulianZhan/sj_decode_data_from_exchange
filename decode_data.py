@@ -1,7 +1,5 @@
 import logging
-from decode_data_utils import *
-from structure_specific_decode_utils import *
-from fields_structure_data import *
+from structure_specific_decode_utils import process_stock_data
 
 logging.basicConfig(level=logging.ERROR)
 

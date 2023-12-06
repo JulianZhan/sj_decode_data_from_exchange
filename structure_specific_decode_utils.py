@@ -1,6 +1,17 @@
-from decode_data_utils import *
-from fields_structure_data import *
-from fields_specifc_decode_utils import *
+from fields_structure_data import sotck_transaction_structure
+from decode_data_utils import (
+    get_field_level,
+    unpack_bcd,
+    decode_from_hex_with_ascii,
+    decode_from_hex_to_binary_string,
+)
+from fields_specifc_decode_utils import (
+    decode_match_time,
+    decode_price_limit_mark,
+    decode_revelation_note,
+    decode_stcok_code,
+    decode_status_note,
+)
 
 
 def should_decode_field(field_name, revelation_note):
@@ -19,13 +30,18 @@ def should_decode_field(field_name, revelation_note):
         return True
     elif first_word == "trade" and revelation_note["trade_available"]:
         return True
-    elif first_word == "buy" and get_field_level(field_name) <= revelation_note["n_bid"]:
+    elif (
+        first_word == "buy" and get_field_level(field_name) <= revelation_note["n_bid"]
+    ):
         return True
-    elif first_word == "sell" and get_field_level(field_name) <= revelation_note["n_ask"]:
+    elif (
+        first_word == "sell" and get_field_level(field_name) <= revelation_note["n_ask"]
+    ):
         return True
     else:
         return False
-    
+
+
 def process_stock_data(stock_data):
     """
     Processes stock data with stock data structure format 6.
@@ -70,15 +86,21 @@ def process_stock_data(stock_data):
     )
 
     # set fixed fields
-    sotck_transaction_structure.fields["stock_code"].value = decode_stcok_code(stock_code)
-    sotck_transaction_structure.fields["revelation_note"].value = decode_revelation_note(
-        revelation_note
+    sotck_transaction_structure.fields["stock_code"].value = decode_stcok_code(
+        stock_code
     )
-    sotck_transaction_structure.fields["match_time"].value = decode_match_time(match_time)
-    sotck_transaction_structure.fields["price_limit_mark"].value = decode_price_limit_mark(
-        price_limit_mark
+    sotck_transaction_structure.fields[
+        "revelation_note"
+    ].value = decode_revelation_note(revelation_note)
+    sotck_transaction_structure.fields["match_time"].value = decode_match_time(
+        match_time
     )
-    sotck_transaction_structure.fields["status_note"].value = decode_status_note(status_note)
+    sotck_transaction_structure.fields[
+        "price_limit_mark"
+    ].value = decode_price_limit_mark(price_limit_mark)
+    sotck_transaction_structure.fields["status_note"].value = decode_status_note(
+        status_note
+    )
 
     # use number_of_position_to_move to adjust the position of the fields, if some fields do not need to be decoded
     number_of_position_to_move = 0
