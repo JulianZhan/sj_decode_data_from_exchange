@@ -1,12 +1,30 @@
-def decode_revelation_note(revelation_note):
+def decode_revelation_note(value):
+    """
+    Format revelation note to make it more readable
+
+    Args:
+        revelation_note (str): Revelation note in binary string.
+
+    Returns:
+        dict: Decoded revelation note.
+    """
     return {
-        "trade_available": bool(int(revelation_note[0])),
-        "n_bid": int(revelation_note[1:4], 2),
-        "n_ask": int(revelation_note[4:7], 2),
-        "trade_only": bool(int(revelation_note[7]))
+        "trade_available": bool(int(value[0])),
+        "n_bid": int(value[1:4], 2),
+        "n_ask": int(value[4:7], 2),
+        "trade_only": bool(int(value[7]))
     }
 
 def decode_price_limit_mark(value):
+    """
+    Format price limit mark to make it more readable
+
+    Args:
+        value (str): Price limit mark in binary string.
+
+    Returns:
+        dict: Decoded price limit mark.
+    """
     transaction_type = ["normal", "limit_down", "limit_up"]
     price_trend = ["normal", "downward_trend", "upward_trend", "reserved"]
 
@@ -19,6 +37,15 @@ def decode_price_limit_mark(value):
 
 
 def decode_status_note(value):
+    """
+    Format status note to make it more readable
+
+    Args:
+        value (str): Status note in binary string.
+
+    Returns:
+        dict: Decoded status note.
+    """
     trial_calc_status = ["normal", "trial"]
     delayed = [False, True]
     matching_method = ["aggregate", "individual"]
@@ -31,6 +58,15 @@ def decode_status_note(value):
     }
 
 def decode_match_time(unpacked_time):
+    """
+    Format match time to make it more readable
+
+    Args:
+        unpacked_time (int): Match time in unpacked BCD format.
+
+    Returns:
+        dict: Decoded match time.
+    """
     unpacked_time = str(unpacked_time)
     if len(unpacked_time) == 12:
         return {
@@ -50,4 +86,13 @@ def decode_match_time(unpacked_time):
         }
 
 def decode_stcok_code(stock_code):
+    """
+    Remove leading and trailing spaces from stock code
+
+    Args:
+        stock_code (str): Stock code.
+
+    Returns:
+        str: Stock code without leading and trailing spaces.
+    """
     return stock_code.strip()

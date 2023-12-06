@@ -28,16 +28,16 @@ def should_decode_field(field_name, revelation_note):
     
 def process_stock_data(stock_data):
     """
-    Processes stock data with the given stock data structure.
+    Processes stock data with stock data structure format 6.
     Trade and volume, buy and sell prices and volumes are decoded based on the revelation note dynamically.
 
     Args:
         stock_data (bytes): Stock data in bytes.
-        sotck_transaction_structure (StockDataStructure): Stock data structure.
 
     Returns:
         StockDataStructure: Processed stock data structure.
     """
+    # get index of fixed fields
     stock_code_start, stock_code_end = sotck_transaction_structure.fields[
         "stock_code"
     ].position
@@ -54,6 +54,7 @@ def process_stock_data(stock_data):
         "status_note"
     ].position
 
+    # decode fixed fields
     stock_code = decode_from_hex_with_ascii(stock_data[stock_code_start:stock_code_end])
     revelation_note = decode_from_hex_to_binary_string(
         stock_data[revelation_note_start:revelation_note_end]
@@ -68,6 +69,7 @@ def process_stock_data(stock_data):
         stock_data[status_note_start:status_note_end]
     )
 
+    # set fixed fields
     sotck_transaction_structure.fields["stock_code"].value = decode_stcok_code(stock_code)
     sotck_transaction_structure.fields["revelation_note"].value = decode_revelation_note(
         revelation_note
@@ -78,24 +80,19 @@ def process_stock_data(stock_data):
     )
     sotck_transaction_structure.fields["status_note"].value = decode_status_note(status_note)
 
+    # use number_of_position_to_move to adjust the position of the fields, if some fields do not need to be decoded
     number_of_position_to_move = 0
+    revelation_note = sotck_transaction_structure.fields["revelation_note"].value
 
     for field_name, field in sotck_transaction_structure.fields.items():
         start_position = field.position[0]
         end_position = field.position[1]
-        if should_decode_field(field_name, sotck_transaction_structure.fields["revelation_note"].value):
+        if should_decode_field(field_name, revelation_note):
             start_position -= number_of_position_to_move
             end_position -= number_of_position_to_move
 
             field_bytes = stock_data[start_position:end_position]
-            if field.storing_type == "PACK BCD":
-                field.value = unpack_bcd(field_bytes, data_type=field.data_type)
-            elif field.storing_type == "BIT MAP":
-                field.value = decode_from_hex_to_binary_string(field_bytes)
-            elif field.storing_type == "ASCII":
-                field.value = decode_from_hex_with_ascii(field_bytes)
-            else:
-                field.value = field_bytes
+            field.value = unpack_bcd(field_bytes, data_type=field.data_type)
         else:
             if field_name == "trade_price":
                 number_of_position_to_move += 3
