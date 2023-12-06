@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def unpack_bcd(bcd_data, data_type=None):
     """
     Unpacks pack BCD data in hex format to decimal.
@@ -80,12 +77,11 @@ def decode_from_hex_to_binary_string(hex_data):
     Returns:
         str: Binary string with eight bits.
     """
-    # convert hex to binary string
+    # convert hex to integer
     hex_data = int.from_bytes(hex_data, byteorder="big")
-    decoded = np.base_repr(hex_data, base=2)
-    # pad with zeros to make sure the string is 8 bits long
+    # make integer into binary string with 8 bits
     # if input is 0x00, return should be 00000000
-    return decoded.zfill(8)
+    return format(hex_data, "08b")
 
 
 def should_decode_field(field_name, revelation_note):
