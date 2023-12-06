@@ -71,18 +71,18 @@ def decode_match_time(unpacked_time):
     if len(unpacked_time) == 12:
         return {
             "hours": int(unpacked_time[0:2]),
-            "Minutes": int(unpacked_time[2:4]),
-            "Seconds": int(unpacked_time[4:6]),
-            "Milliseconds": int(unpacked_time[6:9]),
-            "Microseconds": int(unpacked_time[9:12])
+            "minutes": int(unpacked_time[2:4]),
+            "seconds": int(unpacked_time[4:6]),
+            "milliseconds": int(unpacked_time[6:9]),
+            "microseconds": int(unpacked_time[9:12])
         }
     else:
         return {
             "hours": int(unpacked_time[0:1]),
-            "Minutes": int(unpacked_time[1:3]),
-            "Seconds": int(unpacked_time[3:5]),
-            "Milliseconds": int(unpacked_time[5:8]),
-            "Microseconds": int(unpacked_time[8:11])
+            "minutes": int(unpacked_time[1:3]),
+            "seconds": int(unpacked_time[3:5]),
+            "milliseconds": int(unpacked_time[5:8]),
+            "microseconds": int(unpacked_time[8:11])
         }
 
 def decode_stcok_code(stock_code):

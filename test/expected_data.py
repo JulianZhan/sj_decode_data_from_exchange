@@ -3,10 +3,10 @@ expected_data_tsmc = {
     "stock_code": "2330",
     "match_time": {
         "hours": 9,
-        "Minutes": 4,
-        "Seconds": 15,
-        "Milliseconds": 61,
-        "Microseconds": 278,
+        "minutes": 4,
+        "seconds": 15,
+        "milliseconds": 61,
+        "microseconds": 278,
     },
     "revelation_note": {
         "trade_available": True,
@@ -51,10 +51,10 @@ expected_data_2002 = {
     "stock_code": "2002",
     "match_time": {
         "hours": 10,
-        "Minutes": 27,
-        "Seconds": 33,
-        "Milliseconds": 165,
-        "Microseconds": 41,
+        "minutes": 27,
+        "seconds": 33,
+        "milliseconds": 165,
+        "microseconds": 41,
     },
     "revelation_note": {
         "trade_available": True,
@@ -94,10 +94,10 @@ expected_data_1504 = {
     "stock_code": "1504",
     "match_time": {
         "hours": 9,
-        "Minutes": 50,
-        "Seconds": 23,
-        "Milliseconds": 271,
-        "Microseconds": 534,
+        "minutes": 50,
+        "seconds": 23,
+        "milliseconds": 271,
+        "microseconds": 534,
     },
     "revelation_note": {
         "trade_available": True,
@@ -136,10 +136,10 @@ expected_data_1301 = {
     "stock_code": "1301",
     "match_time": {
         "hours": 9,
-        "Minutes": 45,
-        "Seconds": 19,
-        "Milliseconds": 33,
-        "Microseconds": 17,
+        "minutes": 45,
+        "seconds": 19,
+        "milliseconds": 33,
+        "microseconds": 17,
     },
     "revelation_note": {
         "trade_available": True,
