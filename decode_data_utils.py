@@ -28,13 +28,14 @@ def unpack_bcd(bcd_data, data_type=None):
         # concatenate the high and low nibbles to the unpacked string
         unpacked += str(high_nibble) + str(low_nibble)
 
-    # if data_type ends with "V99", convert the unpacked string to float
-    if isinstance(data_type, str) and data_type.endswith("V99"):
-        unpacked = unpacked[:-2] + "." + unpacked[-2:]
-        unpacked = float(unpacked)
-    # if data_type starts with "9" but not ends with "V99", convert the unpacked string to int
-    elif isinstance(data_type, str) and data_type.startswith("9"):
-        unpacked = int(unpacked)
+    if isinstance(data_type, str):
+        # if data_type ends with "V99", convert the unpacked string to float
+        if data_type.endswith("V99"):
+            unpacked = float(unpacked[:-2] + "." + unpacked[-2:])
+        # if data_type starts with "9" but not ends with "V99", convert the unpacked string to int
+        elif data_type.startswith("9"):
+            unpacked = int(unpacked)
+
     return unpacked
 
 
@@ -85,51 +86,6 @@ def decode_from_hex_to_binary_string(hex_data):
     # pad with zeros to make sure the string is 8 bits long
     # if input is 0x00, return should be 00000000
     return decoded.zfill(8)
-
-
-def is_beginning_of_message(hex_data):
-    """
-    Checks if the data is the beginning of a message.
-
-    Args:
-        hex_data (bytes): Hex data, one byte.
-
-    Returns:
-        bool: True if the data is the beginning of a message, False otherwise.
-    """
-    # check if the byte is 0x1B
-    return hex_data == b"\x1b"
-
-
-def is_end_of_message(hex_data):
-    """
-    Checks if the data is the end of a message.
-
-    Args:
-        hex_data (bytes): Hex data, two bytes.
-
-    Returns:
-        bool: True if the data is the end of a message, False otherwise.
-    """
-    # check if the bytes are 0x0D 0x0A
-    return hex_data == b"\r\n"
-
-
-def calculate_xor_checksum(data, skip_the_beginning=1, skip_the_end=-3):
-    """
-    Calculates the XOR checksum of the data, excluding the first and last three bytes.
-
-    Args:
-        data (bytes): Hex data, multiple bytes.
-
-    Returns:
-        int: XOR checksum.
-    """
-    checksum = 0
-    for byte in data[skip_the_beginning:skip_the_end]:
-        # XOR the checksum with the current byte
-        checksum ^= byte
-    return checksum
 
 
 def should_decode_field(field_name, revelation_note):
