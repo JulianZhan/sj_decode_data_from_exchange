@@ -1,6 +1,6 @@
 from fields_structure_template import Field, StockTransactionStructure
 
-sotck_transaction_structure_6 = StockTransactionStructure(
+sotck_transaction_structure = StockTransactionStructure(
     {
         "stock_code": Field("stock_code", (10, 16), "X(06)", "ASCII"),
         "match_time": Field("match_time", (16, 22), "9(12)", "PACK BCD"),

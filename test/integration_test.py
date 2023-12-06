@@ -6,28 +6,28 @@ from decode_data import *
 
 
 def test_tsmc_stock_data():
-    decoded_data = process_stock_data_dynamic(tsmc_data, sotck_transaction_structure_6)
+    decoded_data = process_stock_data(tsmc_data)
 
     for key in expected_data_tsmc:
         assert decoded_data.fields[key].value == expected_data_tsmc[key]
 
 
 def test_2002_stock_data():
-    decoded_data = process_stock_data_dynamic(data_2002, sotck_transaction_structure_6)
+    decoded_data = process_stock_data(data_2002)
 
     for key in expected_data_2002:
         assert decoded_data.fields[key].value == expected_data_2002[key]
 
 
 def test_1504_stock_data():
-    decoded_data = process_stock_data_dynamic(data_1504, sotck_transaction_structure_6)
+    decoded_data = process_stock_data(data_1504)
 
     for key in expected_data_1504:
         assert decoded_data.fields[key].value == expected_data_1504[key]
 
 
 def test_1301_stock_data():
-    decoded_data = process_stock_data_dynamic(data_1301, sotck_transaction_structure_6)
+    decoded_data = process_stock_data(data_1301)
 
     for key in expected_data_1301:
         assert decoded_data.fields[key].value == expected_data_1301[key]

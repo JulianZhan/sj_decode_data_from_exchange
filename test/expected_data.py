@@ -1,10 +1,31 @@
 # TSMC stock data
 expected_data_tsmc = {
-    "stock_code": "2330  ",
-    "match_time": 90415061278,
-    "revelation_note": "11010110",
-    "price_limit_mark": "00000000",
-    "status_note": "00000000",
+    "stock_code": "2330",
+    "match_time": {
+        "hours": 9,
+        "Minutes": 4,
+        "Seconds": 15,
+        "Milliseconds": 61,
+        "Microseconds": 278,
+    },
+    "revelation_note": {
+        "trade_available": True,
+        "n_bid": 5,
+        "n_ask": 3,
+        "trade_only": False,
+    },
+    "price_limit_mark": {
+        "trade": "normal",
+        "bid": "normal",
+        "ask": "normal",
+        "price_trend": "normal",
+    },
+    "status_note": {
+        "trial_calc_status": "normal",
+        "delayed_opening": False,
+        "delayed_closing": False,
+        "matching_method": "aggregate",
+    },
     "cumulative_volume": 16423,
     "trade_price": 99.50,
     "trade_volume": 1234,
@@ -27,11 +48,32 @@ expected_data_tsmc = {
 }
 
 expected_data_2002 = {
-    "stock_code": "2002  ",
-    "match_time": 102733165041,
-    "revelation_note": "11010000",
-    "price_limit_mark": "10100000",
-    "status_note": "00000000",
+    "stock_code": "2002",
+    "match_time": {
+        "hours": 10,
+        "Minutes": 27,
+        "Seconds": 33,
+        "Milliseconds": 165,
+        "Microseconds": 41,
+    },
+    "revelation_note": {
+        "trade_available": True,
+        "n_bid": 5,
+        "n_ask": 0,
+        "trade_only": False,
+    },
+    "price_limit_mark": {
+        "trade": "limit_up",
+        "bid": "limit_up",
+        "ask": "normal",
+        "price_trend": "normal",
+    },
+    "status_note": {
+        "trial_calc_status": "normal",
+        "delayed_opening": False,
+        "delayed_closing": False,
+        "matching_method": "aggregate",
+    },
     "cumulative_volume": 11921,
     "trade_price": 13.85,
     "trade_volume": 1921,
@@ -49,11 +91,32 @@ expected_data_2002 = {
 
 
 expected_data_1504 = {
-    "stock_code": "1504  ",
-    "match_time": 95023271534,
-    "revelation_note": "10001010",
-    "price_limit_mark": "01000100",
-    "status_note": "00000000",
+    "stock_code": "1504",
+    "match_time": {
+        "hours": 9,
+        "Minutes": 50,
+        "Seconds": 23,
+        "Milliseconds": 271,
+        "Microseconds": 534,
+    },
+    "revelation_note": {
+        "trade_available": True,
+        "n_bid": 0,
+        "n_ask": 5,
+        "trade_only": False,
+    },
+    "price_limit_mark": {
+        "trade": "limit_down",
+        "bid": "normal",
+        "ask": "limit_down",
+        "price_trend": "normal",
+    },
+    "status_note": {
+        "trial_calc_status": "normal",
+        "delayed_opening": False,
+        "delayed_closing": False,
+        "matching_method": "aggregate",
+    },
     "cumulative_volume": 650,
     "trade_price": 11.50,
     "trade_volume": 17,
@@ -70,11 +133,32 @@ expected_data_1504 = {
 }
 
 expected_data_1301 = {
-    "stock_code": "1301  ",
-    "match_time": 94519033017,
-    "revelation_note": "10000000",
-    "price_limit_mark": "10000001",
-    "status_note": "00000000",
+    "stock_code": "1301",
+    "match_time": {
+        "hours": 9,
+        "Minutes": 45,
+        "Seconds": 19,
+        "Milliseconds": 33,
+        "Microseconds": 17,
+    },
+    "revelation_note": {
+        "trade_available": True,
+        "n_bid": 0,
+        "n_ask": 0,
+        "trade_only": False,
+    },
+    "price_limit_mark": {
+        "trade": "limit_up",
+        "bid": "normal",
+        "ask": "normal",
+        "price_trend": "downward_trend",
+    },
+    "status_note": {
+        "trial_calc_status": "normal",
+        "delayed_opening": False,
+        "delayed_closing": False,
+        "matching_method": "aggregate",
+    },
     "cumulative_volume": 1558,
     "trade_price": 33.50,
     "trade_volume": 0,
