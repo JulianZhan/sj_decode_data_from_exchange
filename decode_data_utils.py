@@ -133,6 +133,16 @@ def calculate_xor_checksum(data, skip_the_beginning=1, skip_the_end=-3):
 
 
 def should_decode_field(field_name, revelation_note):
+    """
+    Checks if the field should be decoded.
+
+    Args:
+        field_name (str): Field name.
+        revelation_note (str): Revelation note as binary string.
+
+    Returns:
+        bool: True if the field should be decoded, False otherwise.
+    """
     if not field_name.startswith("buy_") and not field_name.startswith("sell_"):
         return True
 
@@ -163,6 +173,15 @@ def should_decode_field(field_name, revelation_note):
 
 
 def _get_field_level(field_name):
+    """
+    Gets the level of the field. Level is the last number in the field name from buy and sell.
+
+    Args:
+        field_name (str): Field name.
+
+    Returns:
+        int: Level of the field.
+    """
     # extract the last number from the field name
     try:
         return int(field_name.split("_")[-1])
@@ -170,36 +189,18 @@ def _get_field_level(field_name):
         return 0
 
 
-def process_stock_data(stock_data, stock_data_structure):
+def process_stock_data_dynamic(stock_data, stock_data_structure):
     """
-    Processes stock data based on the given stock data structure.
+    Processes stock data with the given stock data structure.
+    Trade and volume, buy and sell prices and volumes are decoded based on the revelation note dynamically.
 
     Args:
-        stock_data (bytes): Hex data, multiple bytes.
-        stock_data_structure (StockTransactionStructure): Stock data structure.
+        stock_data (bytes): Stock data in bytes.
+        stock_data_structure (StockDataStructure): Stock data structure.
 
     Returns:
-        StockTransactionStructure: Stock data structure with values.
+        StockDataStructure: Processed stock data structure.
     """
-
-    for field in stock_data_structure.fields.values():
-        # get the bytes of the field
-        field_bytes = stock_data[field.position[0] : field.position[1]]
-
-        # decode the bytes based on the storing type
-        if field.storing_type == "ASCII":
-            field.value = decode_from_hex_with_ascii(field_bytes)
-        elif field.storing_type == "PACK BCD":
-            field.value = unpack_bcd(field_bytes, data_type=field.data_type)
-        elif field.storing_type == "BIT MAP":
-            field.value = decode_from_hex_to_binary_string(field_bytes)
-        else:
-            field.value = field_bytes
-
-    return stock_data_structure
-
-
-def process_stock_data_dynamic(stock_data, stock_data_structure):
     revelation_note = decode_from_hex_to_binary_string(stock_data[22:23])
     number_of_position_to_move = 0
 
@@ -209,7 +210,7 @@ def process_stock_data_dynamic(stock_data, stock_data_structure):
         if should_decode_field(field_name, revelation_note):
             start_position -= number_of_position_to_move
             end_position -= number_of_position_to_move
-            
+
             field_bytes = stock_data[start_position:end_position]
             if field.storing_type == "ASCII":
                 field.value = decode_from_hex_with_ascii(field_bytes)

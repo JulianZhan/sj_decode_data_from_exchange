@@ -2,6 +2,15 @@ from decode_data_utils import *
 from fields_structure_data import *
 
 def decode_new_file(file_path):
+    """
+    Decodes the given file path.
+
+    Args:
+        file_path (str): File path.
+
+    Returns:
+        list: List of processed records.
+    """
     with open(file_path, "rb") as file:
         file_data = file.read()
 
