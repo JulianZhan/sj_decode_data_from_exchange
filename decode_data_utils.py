@@ -95,12 +95,10 @@ def should_decode_field(field_name, revelation_note):
     Returns:
         bool: True if the field should be decoded, False otherwise.
     """
-    if not field_name.startswith("buy_") and not field_name.startswith("sell_"):
-        return True
 
     # trade price and volume (bit 7)
-    if revelation_note[0] == "1" and field_name in set(("trade_price", "trade_volume")):
-        return True
+    if revelation_note[0] == "0" and field_name in ("trade_price", "trade_volume"):
+        return False
 
     # if bit 0 is 1, skip prices and volumes for both buy and sell
     if revelation_note[7] == "1" and (
@@ -110,18 +108,18 @@ def should_decode_field(field_name, revelation_note):
 
     # buy price and volume (bit 6-4)
     num_buy_levels = int(revelation_note[1:4], 2)  # binary to integer
-    if field_name.startswith("buy_") and _get_field_level(field_name) <= num_buy_levels:
-        return True
+    if field_name.startswith("buy_") and _get_field_level(field_name) > num_buy_levels:
+        return False
 
     # sell price and volume (Bit 3-1)
     num_sell_levels = int(revelation_note[4:7], 2)  # binary to integer
     if (
         field_name.startswith("sell_")
-        and _get_field_level(field_name) <= num_sell_levels
+        and _get_field_level(field_name) > num_sell_levels
     ):
-        return True
+        return False
 
-    return False
+    return True
 
 
 def _get_field_level(field_name):
@@ -164,12 +162,12 @@ def process_stock_data_dynamic(stock_data, stock_data_structure):
             end_position -= number_of_position_to_move
 
             field_bytes = stock_data[start_position:end_position]
-            if field.storing_type == "ASCII":
-                field.value = decode_from_hex_with_ascii(field_bytes)
-            elif field.storing_type == "PACK BCD":
+            if field.storing_type == "PACK BCD":
                 field.value = unpack_bcd(field_bytes, data_type=field.data_type)
             elif field.storing_type == "BIT MAP":
                 field.value = decode_from_hex_to_binary_string(field_bytes)
+            elif field.storing_type == "ASCII":
+                field.value = decode_from_hex_with_ascii(field_bytes)
             else:
                 field.value = field_bytes
         else:
