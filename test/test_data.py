@@ -113,4 +113,3 @@ data_1301 = bytes([
     0x0D, 0x0A              # TERMINAL-CODE (Hexacode: 0D 0A)
 ])
 
-

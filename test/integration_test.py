@@ -1,110 +1,55 @@
 from fields_structure_data import *
 from test_data import *
+from expected_data import *
 from decode_data_utils import *
+from decode_data import *
 
 
 def test_tsmc_stock_data():
-    # TSMC stock data
-    expected_data = {
-        "stock_code": "2330  ",
-        "match_time": 90415061278,
-        "revelation_note": "11010110",
-        "price_limit_mark": "00000000",
-        "status_note": "00000000",
-        "cumulative_volume": 16423,
-        "trade_price": 99.50,
-        "trade_volume": 1234,
-        "buy_price_1": 99.50,
-        "buy_volume_1": 250,
-        "buy_price_2": 99.00,
-        "buy_volume_2": 175,
-        "buy_price_3": 98.50,
-        "buy_volume_3": 477,
-        "buy_price_4": 97.50,
-        "buy_volume_4": 669,
-        "buy_price_5": 97.00,
-        "buy_volume_5": 125,
-        "sell_price_1": 100.00,
-        "sell_volume_1": 80,
-        "sell_price_2": 100.50,
-        "sell_volume_2": 675,
-        "sell_price_3": 101.50,
-        "sell_volume_3": 460,
-    }
-
     decoded_data = process_stock_data_dynamic(tsmc_data, sotck_transaction_structure_6)
 
-    for key in expected_data:
-        assert decoded_data.fields[key].value == expected_data[key]
+    for key in expected_data_tsmc:
+        assert decoded_data.fields[key].value == expected_data_tsmc[key]
 
 
 def test_2002_stock_data():
-    expected_data = {
-        "stock_code": "2002  ",
-        "match_time": 102733165041,
-        "revelation_note": "11010000",
-        "price_limit_mark": "10100000",
-        "status_note": "00000000",
-        "cumulative_volume": 11921,
-        "trade_price": 13.85,
-        "trade_volume": 1921,
-        "buy_price_1": 13.85,
-        "buy_volume_1": 540,
-        "buy_price_2": 13.80,
-        "buy_volume_2": 230,
-        "buy_price_3": 13.75,
-        "buy_volume_3": 72,
-        "buy_price_4": 13.70,
-        "buy_volume_4": 69,
-        "buy_price_5": 13.65,
-        "buy_volume_5": 81,
-    }
     decoded_data = process_stock_data_dynamic(data_2002, sotck_transaction_structure_6)
 
-    for key in expected_data:
-        assert decoded_data.fields[key].value == expected_data[key]
+    for key in expected_data_2002:
+        assert decoded_data.fields[key].value == expected_data_2002[key]
 
 
 def test_1504_stock_data():
-    expected_data = {
-        "stock_code": "1504  ",
-        "match_time": 95023271534, 
-        "revelation_note": "10001010",
-        "price_limit_mark": "01000100",
-        "status_note": "00000000",
-        "cumulative_volume": 650,
-        "trade_price": 11.50,
-        "trade_volume": 17,
-        "sell_price_1": 11.50,
-        "sell_volume_1": 70,
-        "sell_price_2": 11.55,
-        "sell_volume_2": 35,
-        "sell_price_3": 11.60,
-        "sell_volume_3": 46,
-        "sell_price_4": 11.65,
-        "sell_volume_4": 28,
-        "sell_price_5": 11.70,
-        "sell_volume_5": 19,
-    }
-
     decoded_data = process_stock_data_dynamic(data_1504, sotck_transaction_structure_6)
 
-    for key in expected_data:
-        assert decoded_data.fields[key].value == expected_data[key]
+    for key in expected_data_1504:
+        assert decoded_data.fields[key].value == expected_data_1504[key]
 
 
 def test_1301_stock_data():
-    expected_data = {
-        "stock_code": "1301  ",
-        "match_time": 94519033017,
-        "revelation_note": "10000000",
-        "price_limit_mark": "10000001",
-        "status_note": "00000000",
-        "cumulative_volume": 1558,
-        "trade_price": 33.50,
-        "trade_volume": 0,
-    }
     decoded_data = process_stock_data_dynamic(data_1301, sotck_transaction_structure_6)
 
-    for key in expected_data:
-        assert decoded_data.fields[key].value == expected_data[key]
+    for key in expected_data_1301:
+        assert decoded_data.fields[key].value == expected_data_1301[key]
+
+
+def test_decode_data_function():
+    decoded_data_tsmc = decode_data(tsmc_data)
+    
+    for key in expected_data_tsmc:
+        assert decoded_data_tsmc[0].fields[key].value == expected_data_tsmc[key]
+
+    decoded_data_2002 = decode_data(data_2002)
+    
+    for key in expected_data_2002:
+        assert decoded_data_2002[0].fields[key].value == expected_data_2002[key]
+
+    decoded_data_1504 = decode_data(data_1504)
+    
+    for key in expected_data_1504:
+        assert decoded_data_1504[0].fields[key].value == expected_data_1504[key]
+
+    decoded_data_1301 = decode_data(data_1301)
+    
+    for key in expected_data_1301:
+        assert decoded_data_1301[0].fields[key].value == expected_data_1301[key]
