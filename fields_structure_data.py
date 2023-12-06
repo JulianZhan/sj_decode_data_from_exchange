@@ -2,18 +2,6 @@ from fields_structure_template import Field, StockTransactionStructure
 
 sotck_transaction_structure_6 = StockTransactionStructure(
     {
-        "esc_code": Field("esc_code", (0, 1), "X(01)", "ASCII 27"),
-        "message_length": Field("message_length", (1, 3), "9(04)", "PACK BCD"),
-        "business_type": Field("business_type", (3, 4), "9(02)", "PACK BCD"),
-        "transmission_format_code": Field(
-            "transmission_format_code", (4, 5), "9(02)", "PACK BCD"
-        ),
-        "transmission_format_version": Field(
-            "transmission_format_version", (5, 6), "9(02)", "PACK BCD"
-        ),
-        "transmission_number": Field(
-            "transmission_number", (6, 10), "9(08)", "PACK BCD"
-        ),
         "stock_code": Field("stock_code", (10, 16), "X(06)", "ASCII"),
         "match_time": Field("match_time", (16, 22), "9(12)", "PACK BCD"),
         "revelation_note": Field("revelation_note", (22, 23), "X(01)", "BIT MAP"),
@@ -42,7 +30,5 @@ sotck_transaction_structure_6 = StockTransactionStructure(
         "sell_volume_4": Field("sell_volume_4", (95, 99), "9(08)", "PACK BCD"),
         "sell_price_5": Field("sell_price_5", (99, 102), "9(4)V99", "PACK BCD"),
         "sell_volume_5": Field("sell_volume_5", (102, 106), "9(08)", "PACK BCD"),
-        "check_sum": Field("check_sum", (106, 107), "X(01)", "XOR"),
-        "terminal_code": Field("terminal_code", (107, 109), "X(02)", "HEXACODE"),
     }
 )

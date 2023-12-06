@@ -6,12 +6,6 @@ from decode_data_utils import *
 def test_tsmc_stock_data():
     # TSMC stock data
     expected_data = {
-        "esc_code": b"\x1b",
-        "message_length": 95,
-        "business_type": 1,
-        "transmission_format_code": 6,
-        "transmission_format_version": 3,
-        "transmission_number": 4567,
         "stock_code": "2330  ",
         "match_time": 90415061278,
         "revelation_note": "11010110",
@@ -36,8 +30,6 @@ def test_tsmc_stock_data():
         "sell_volume_2": 675,
         "sell_price_3": 101.50,
         "sell_volume_3": 460,
-        "check_sum": b"\xfb",
-        "terminal_code": b"\x0d\x0a",
     }
 
     decoded_data = process_stock_data_dynamic(tsmc_data, sotck_transaction_structure_6)
@@ -48,12 +40,6 @@ def test_tsmc_stock_data():
 
 def test_2002_stock_data():
     expected_data = {
-        "esc_code": b"\x1b",
-        "message_length": 73,
-        "business_type": 1,
-        "transmission_format_code": 6,
-        "transmission_format_version": 3,
-        "transmission_number": 64323,
         "stock_code": "2002  ",
         "match_time": 102733165041,
         "revelation_note": "11010000",
@@ -72,8 +58,6 @@ def test_2002_stock_data():
         "buy_volume_4": 69,
         "buy_price_5": 13.65,
         "buy_volume_5": 81,
-        "check_sum": b"\x6e",
-        "terminal_code": b"\x0d\x0a",
     }
     decoded_data = process_stock_data_dynamic(data_2002, sotck_transaction_structure_6)
 
@@ -83,14 +67,8 @@ def test_2002_stock_data():
 
 def test_1504_stock_data():
     expected_data = {
-        "esc_code": b"\x1b",
-        "message_length": 65,
-        "business_type": 1,
-        "transmission_format_code": 6,
-        "transmission_format_version": 3,
-        "transmission_number": 41234,
         "stock_code": "1504  ",
-        "match_time": 95023271534,  # This is a placeholder, adjust as needed
+        "match_time": 95023271534, 
         "revelation_note": "10001010",
         "price_limit_mark": "01000100",
         "status_note": "00000000",
@@ -107,8 +85,6 @@ def test_1504_stock_data():
         "sell_volume_4": 28,
         "sell_price_5": 11.70,
         "sell_volume_5": 19,
-        "check_sum": b"\xa2",
-        "terminal_code": b"\x0d\x0a",
     }
 
     decoded_data = process_stock_data_dynamic(data_1504, sotck_transaction_structure_6)
@@ -119,12 +95,6 @@ def test_1504_stock_data():
 
 def test_1301_stock_data():
     expected_data = {
-        "esc_code": b"\x1b",
-        "message_length": 39,
-        "business_type": 1,
-        "transmission_format_code": 6,
-        "transmission_format_version": 3,
-        "transmission_number": 8325,
         "stock_code": "1301  ",
         "match_time": 94519033017,
         "revelation_note": "10000000",
@@ -133,8 +103,6 @@ def test_1301_stock_data():
         "cumulative_volume": 1558,
         "trade_price": 33.50,
         "trade_volume": 0,
-        "check_sum": b"\xc6",
-        "terminal_code": b"\x0d\x0a",
     }
     decoded_data = process_stock_data_dynamic(data_1301, sotck_transaction_structure_6)
 
